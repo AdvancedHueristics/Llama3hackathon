@@ -1,18 +1,35 @@
 from together import Together
+import os
 
-def get_env_data_as_dict(path: str) -> dict:
+# Load environment variables
+def load_env_vars(path: str) -> dict:
+    env_vars = {}
     with open(path, 'r') as f:
-       return dict(tuple(line.replace('\n', '').split('=')) for line
-                in f.readlines() if not line.startswith('#'))
+        for line in f:
+            line = line.strip()
+            if line and not line.startswith('#'):
+                key, value = line.split('=', 1)
+                env_vars[key] = value
+    return env_vars
 
-env_dict = get_env_data_as_dict('.env')
-client = Together(api_key=env_dict.get("TOGETHER_API_KEY", ""))
+# Initialize NLP client
+env_vars = load_env_vars('sample.env')
+api_key = env_vars.get("TOGETHER_API_KEY", "")
+if not api_key:
+    raise ValueError("API key is missing")
 
-stream = client.chat.completions.create(
-  model="meta-llama/Meta-Llama-3-8B-Instruct-Turbo",
-  messages=[{"role": "user", "content": "What are some fun things to do in New York?"}],
-  stream=True,
-)
+client = Together(api_key=api_key)
 
-for chunk in stream:
-  print(chunk.choices[0].delta.content or "", end="", flush=True)
+def get_response(user_input: str) -> str:
+    try:
+        stream = client.chat.completions.create(
+            model="meta-llama/Meta-Llama-3-8B-Instruct-Turbo",
+            messages=[{"role": "user", "content": user_input}],
+            stream=True,
+        )
+        response = ""
+        for chunk in stream:
+            response += chunk.choices[0].delta.content or ""
+        return response
+    except Exception as e:
+        return f"An error occurred: {e}"
