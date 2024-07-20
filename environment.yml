@@ -3,11 +3,9 @@ channels:
   - defaults
 dependencies:
   - matplotlib
-  - numpy
+  - numpy==1.26.4
   - pandas
   - pip:
-      - groq==0.9.0
-      - langchain-core==0.2.22
-      - langchain-groq==0.1.6
+      - langchain-groq
       - pandasai
-      - streamlit==1.36.0
+      - streamlit
