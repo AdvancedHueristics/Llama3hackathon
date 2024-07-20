@@ -1,4 +1,0 @@
-pandasai
-streamlit
-langchain_groq
-together==1.2.2
