@@ -2,11 +2,10 @@
 
 ### Installation Steps
 create a virtual env
-`python -m venv .venv`
+`conda create --name wizard`
 
 activate it
-`.venv/Scripts/activate`
+`conda activate wizard`
 
 install requirements
 pip install -r requirements.txt
-
