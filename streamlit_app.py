@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import pandasai
 from pandasai import Agent
 from langchain_groq import ChatGroq
 from pandasai.responses.streamlit_response import StreamlitResponse
@@ -7,6 +8,7 @@ import io, json
 from PIL import Image
 from together import Together
 
+pandasai.clear_cache()
 
 def get_env_data_as_dict(path: str) -> dict:
     with open(path, 'r') as f:
@@ -81,7 +83,8 @@ if uploaded_file is not None:
         "llm": model,
         "save_charts": True,
         "verbose": True,
-        "response_parser": StreamlitResponse
+        "response_parser": StreamlitResponse,
+        "enable_cache": False
     })
 
     # Container for the chat interface
