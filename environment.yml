@@ -2,12 +2,12 @@ name: base
 channels:
   - defaults
 dependencies:
-  - matplotlib==3.8.0
-  - numpy=1.26.4
+  - matplotlib
+  - numpy
   - pip:
       - groq==0.9.0
       - langchain-core==0.2.22
       - langchain-groq==0.1.6
-      - pandas==1.5.3
-      - pandasai==2.2.12
+      - pandas
+      - pandasai
       - streamlit==1.36.0
