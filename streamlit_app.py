@@ -7,22 +7,17 @@ from pandasai.responses.streamlit_response import StreamlitResponse
 import io, json, os
 from PIL import Image
 from together import Together
+from dotenv import load_dotenv
 
 pandasai.clear_cache()
 
+load_dotenv()
 
-client = Together(api_key=os.getenv('TOGETHER_API_KEY'))
+client = Together(api_key=os.environ.get('TOGETHER_API_KEY', ""))
 
-def get_env_data_as_dict(path: str) -> dict:
-    with open(path, 'r') as f:
-        return dict(tuple(line.replace('\n', '').split('=')) for line in f.readlines() if not line.startswith('#'))
-
-# Load environment variables
-env_dict = get_env_data_as_dict('.env')
-model = ChatGroq(model_name='llama3-70b-8192', api_key=os.getenv('GROQ_API_KEY'))
+model = ChatGroq(model_name='llama3-70b-8192', api_key=os.environ.get('GROQ_API_KEY', ""))
 
 SYSTEM_PROMPT_TOGETHER = '''You are an AI Query analyzer. Analyze given user query that whether it is related to any CSV, data or charts. If yes then return {"status":True} else then make a reply for the query as polite and helpful member and also state "I am a Data Wizard and I can only help you with Data Science task" return response example as {"status":false, "message":"How are you?"}. If the user query contains Hi or greeting phrases then dont return status as False with relevant reply. The data contains following columns '''
-
 
 st.title("DataWizard: Your DataScience Assistant")
 
