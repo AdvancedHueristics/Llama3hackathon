@@ -1,4 +1,7 @@
 # DataWizard: Your DataScienceAssistant
+<p align="center">
+  <img src="download.png" alt="Data Science Assistant">
+</p>
 
 Welcome to **DataWizard**, your go-to assistant for all things data science! This project leverages the power of **Llama 3** through Together AI and Groq APIs to assist users in their data science tasks with ease. DataWizard employs the pandasai agent for data manipulation and analysis and offers an intuitive UI developed in **Streamlit**.
 
